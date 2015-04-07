@@ -30,8 +30,8 @@ but you can customize your own sound theme by adding `{hook-name}.wav` file in `
 ### How to use sounds on existing git repositiories
 
 Script changes global `init.templatedir` configuration, so sounds will be available only on new repositories (after executing `git init`).
-To play sounds for existing repositories just copy hooks from template directory to `./git/hooks/` directory:
+To play sounds for existing repositories just copy hooks from template directory to `.git/hooks/` directory:
 
-	cp ~/.git_template/hooks/* path/to/git/repository/.git/hooks
+	cp ~/.git_template/hooks/* /path/to/git/repository/.git/hooks
 
 Enjoy!
