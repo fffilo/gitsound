@@ -63,8 +63,6 @@ while true; do
 		* ) echo "Please answer yes or no.";;
 	esac
 done
-echo 1
-exit
 
 echo "Creating git template directory..."
 mkdir -p ${TEMPLATE}/hooks
