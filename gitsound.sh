@@ -52,7 +52,7 @@ if ! which $DOWNLOADER >/dev/null; then
 fi
 
 echo "This action will create git template directory and change global init.templatedir configuration."
-if [ $CONFIG != $TEMPLATE ]; then
+if [[ $CONFIG != $TEMPLATE ]]; then
 	echo -e "You can revert old config by executing: \e[93mgit config --global init.templatedir ${CONFIG}\e[0m"
 fi
 while true; do
