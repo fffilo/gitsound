@@ -9,3 +9,22 @@ By default some super mario sounds are downloaded (thanks to [this site](http://
 but you can customize your own sound theme by adding `{hook-name}.wav` file in `~/.git_sounds/` directory...
 
 Enjoy!
+
+### How to install
+
+	# clone repository
+	git clone https://github.com/fffilo/gitsound.git
+	cd gitsound
+
+	# make script executable
+	chmod +x gitsound.sh
+
+	# execute script
+	./gitsound.sh
+	#######################
+	# follow instructions #
+	#######################
+
+	# remove repository
+	cd ..
+	rm gitsound -rf
