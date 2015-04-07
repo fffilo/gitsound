@@ -23,7 +23,7 @@ for ITEM in "${PLAYERS[@]}"; do
 	CMD=${ARR[0]}
 	PRM=${ARR[@]:1}
 
-	if [ "$PLAYER" == "" ] && `which ${CMD} >/dev/null`; then
+	if [[ "$PLAYER" == "" ]] && `which ${CMD} >/dev/null`; then
 		PLAYER=`which ${CMD}`
 		PLAYERCMD="${PLAYER} ${PRM} "
 	fi
@@ -41,7 +41,7 @@ for ITEM in "${DOWNLOADERS[@]}"; do
 	CMD=${ARR[0]}
 	PRM=${ARR[@]:1}
 
-	if [ "$DOWNLOADER" == "" ] && `which ${CMD} >/dev/null`; then
+	if [[ "$DOWNLOADER" == "" ]] && `which ${CMD} >/dev/null`; then
 		DOWNLOADER="`which ${CMD}`"
 		DOWNLOADERCMD="${DOWNLOADER} ${PRM} "
 	fi
@@ -53,7 +53,7 @@ fi
 
 echo "This action will create git template directory and change global init.templatedir configuration."
 if [[ $CONFIG != $TEMPLATE ]]; then
-	echo -e "You can revert old config by executing: \e[93mgit config --global init.templatedir ${CONFIG}\e[0m"
+	echo -e "You can revert old config by executing: \e[93mgit config --global init.templatedir \"${CONFIG}\"\e[0m"
 fi
 while true; do
 	read -p "Do you wish to continue [y/n]? " yn
@@ -63,6 +63,8 @@ while true; do
 		* ) echo "Please answer yes or no.";;
 	esac
 done
+echo 1
+exit
 
 echo "Creating git template directory..."
 mkdir -p ${TEMPLATE}/hooks
