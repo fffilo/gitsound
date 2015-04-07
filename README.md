@@ -1,7 +1,7 @@
 Git sounds
 ==========
 
-This script creates git template directory and This:
+This script creates git template directory and changes global `init.templatedir` configuration:
 on every `git init` new templete is added to `.git` directory.
 
 Script is created for each [git hook](http://githooks.com/) which plays some sound if wav file exists.
