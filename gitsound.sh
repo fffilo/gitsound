@@ -3,7 +3,6 @@
 #echo "Config..."
 TEMPLATE="${HOME}/.git_template"
 SOUNDS="${HOME}/.git_sounds"
-CONFIG=`git config --global init.templatedir`
 HOOKS=( "applypatch-msg" "pre-applypatch" "post-applypatch" "pre-commit" "prepare-commit-msg" "commit-msg" "post-commit" "pre-rebase" "post-checkout" "post-merge" "pre-push" "pre-receive" "update" "post-receive" "post-update" "pre-auto-gc" "post-rewrite" "rebase" )
 PLAYERS=( "afplay" "aplay" "mplayer" "ffplay" "cvlc" "nvlc" "mocp" "play" )
 DOWNLOADERS=( "curl -o" "wget -O" )
@@ -52,6 +51,7 @@ if ! which $DOWNLOADER >/dev/null; then
 fi
 
 echo "This action will create git template directory and change global init.templatedir configuration."
+CONFIG=`git config --global init.templatedir`
 if [[ $CONFIG != $TEMPLATE ]]; then
 	echo -e "You can revert old config by executing: \e[93mgit config --global init.templatedir \"${CONFIG}\"\e[0m"
 fi
