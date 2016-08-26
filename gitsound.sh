@@ -4,7 +4,7 @@
 TEMPLATE="${HOME}/.git_template"
 SOUNDS="${HOME}/.git_sounds"
 HOOKS=( "applypatch-msg" "pre-applypatch" "post-applypatch" "pre-commit" "prepare-commit-msg" "commit-msg" "post-commit" "pre-rebase" "post-checkout" "post-merge" "pre-push" "pre-receive" "update" "post-receive" "post-update" "pre-auto-gc" "post-rewrite" "rebase" )
-PLAYERS=( "afplay" "aplay" "mplayer" "ffplay" "cvlc" "nvlc" "mocp" "play" )
+PLAYERS=( "afplay" "aplay" "mplayer" "ffplay" "cvlc" "nvlc" "mocp" "play" "powershell.exe" )
 DOWNLOADERS=( "curl -o" "wget -O" )
 
 #echo "Searching for git package..."
@@ -22,14 +22,14 @@ for ITEM in "${PLAYERS[@]}"; do
 	CMD=${ARR[0]}
 	PRM=${ARR[@]:1}
 
-	if [[ "$PLAYER" == "" ]] && `which ${CMD} >/dev/null`; then
+	if [[ "$PLAYER" == "" ]] && `which ${CMD} >/dev/null 2>&1`; then
 		PLAYER=`which ${CMD}`
 		PLAYERCMD="${PLAYER} ${PRM} "
 	fi
 done
-if ! which $PLAYER >/dev/null; then
+if ! `which $PLAYER >/dev/null 2>&1`; then
 	echo "Unable do determine media player."
-    exit 200
+	exit 200
 fi
 
 #echo "Searching for downloader..."
@@ -40,14 +40,14 @@ for ITEM in "${DOWNLOADERS[@]}"; do
 	CMD=${ARR[0]}
 	PRM=${ARR[@]:1}
 
-	if [[ "$DOWNLOADER" == "" ]] && `which ${CMD} >/dev/null`; then
+	if [[ "$DOWNLOADER" == "" ]] && `which ${CMD} >/dev/null 2>&1`; then
 		DOWNLOADER="`which ${CMD}`"
 		DOWNLOADERCMD="${DOWNLOADER} ${PRM} "
 	fi
 done
-if ! which $DOWNLOADER >/dev/null; then
+if ! which $DOWNLOADER >/dev/null 2>&1; then
 	echo "Unable do determine downloader."
-    exit 300
+	exit 300
 fi
 
 echo "This action will create git template directory and change global init.templatedir configuration."
@@ -73,7 +73,11 @@ for HOOK in "${HOOKS[@]}"; do
 	echo "#!/bin/sh" > ${TEMPLATE}/hooks/${HOOK}
 	echo "" >> ${TEMPLATE}/hooks/${HOOK}
 	echo "if [ -f ${SOUNDS}/${HOOK}.wav ]; then" >> ${TEMPLATE}/hooks/${HOOK}
-	echo -e "\t$PLAYER ${SOUNDS}/${HOOK}.wav </dev/null >/dev/null 2>&1 &" >> ${TEMPLATE}/hooks/${HOOK}
+	if [[ "$PLAYER" == *powershell.exe ]]; then
+		echo -e "\t$PLAYERCMD -c '(New-Object Media.SoundPlayer \"${SOUNDS:1:1}:${SOUNDS:2}/${HOOK}.wav\").PlaySync();' </dev/null >/dev/null 2>&1 &" >> ${TEMPLATE}/hooks/${HOOK}
+	else
+		echo -e "\t$PLAYERCMD ${SOUNDS}/${HOOK}.wav </dev/null >/dev/null 2>&1 &" >> ${TEMPLATE}/hooks/${HOOK}
+	fi
 	echo "fi" >> ${TEMPLATE}/hooks/$HOOK
 	chmod 755 ${TEMPLATE}/hooks/$HOOK
 done
